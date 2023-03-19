@@ -13,7 +13,7 @@ func Racer(urlA, urlB string) (winner string, err error) {
 		return urlA, nil
 	case <-ping(urlB):
 		return urlB, nil
-	case <-timeout():
+	case <-time.After(10 * time.Second):
 		return "", errors.New("ya took too long, now yo candy's gone, see")
 	}
 }
@@ -27,11 +27,12 @@ func ping(url string) chan struct{} {
 	return ch
 }
 
-func timeout() chan struct{} {
-	ch := make(chan struct{})
-	go func() {
-		time.Sleep(10 * time.Second)
-		close(ch)
-	}()
-	return ch
-}
+// Ditching in favor of time.After()
+// func timeout() chan struct{} {
+// 	ch := make(chan struct{})
+// 	go func() {
+// 		time.Sleep(10 * time.Second)
+// 		close(ch)
+// 	}()
+// 	return ch
+// }
