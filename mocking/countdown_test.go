@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"reflect"
 	"testing"
+	"time"
 )
 
 func TestCountdown(t *testing.T) {
@@ -42,6 +43,17 @@ Go!`
 
 		if !reflect.DeepEqual(want, spySleepPrinter.Calls) {
 			t.Errorf("got %v want %v", want, spySleepPrinter.Calls)
+		}
+	})
+	t.Run("test configurable sleeper", func(t *testing.T) {
+		sleepTime := 5 * time.Second
+
+		spyTime := &SpyTime{} // need a pointer here, b/c spyTime.Sleep receives a pointer
+		sleeper := ConfigurableSleeper{sleepTime, spyTime.Sleep}
+		sleeper.Sleep()
+
+		if spyTime.durationSlept != sleepTime {
+			t.Errorf("should have slept for %v but slept for %v", sleepTime, spyTime.durationSlept)
 		}
 	})
 }
