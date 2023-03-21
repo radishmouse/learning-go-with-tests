@@ -6,17 +6,25 @@ import (
 )
 
 func TestWalk(t *testing.T) {
-
+	// For my table based test, I care about:
+	// - a name for my test
+	// - the input
+	// - the expected output
 	cases := []struct {
 		Name          string
 		Input         interface{}
 		ExpectedCalls []string
 	}{
 		{
+			// just a name for my test
 			"struct with one string field",
+			// what am I passing into the function I'm testing?
+			// It's just a struct with a .Name field
+			// and the value of that field is "Chris"
 			struct {
 				Name string
 			}{"Chris"},
+			// the result should be a 1 element slice of strings
 			[]string{"Chris"},
 		},
 	}
