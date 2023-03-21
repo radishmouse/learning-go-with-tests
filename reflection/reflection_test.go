@@ -5,6 +5,16 @@ import (
 	"testing"
 )
 
+type Person struct {
+	Name    string
+	Profile Profile
+}
+
+type Profile struct {
+	Age  int
+	City string
+}
+
 func TestWalk(t *testing.T) {
 	// For my table based test, I care about:
 	// - a name for my test
@@ -46,25 +56,9 @@ func TestWalk(t *testing.T) {
 		},
 		{
 			"nested fields",
-			struct {
-				Name    string
-				Profile struct {
-					Age  int
-					City string
-				}
-			}{
-				// Here's my Name field
+			Person{
 				"Chris",
-				// And for Profile,
-				// I have to declare that {44, "Atlanta"} is of type
-				// struct{
-				// 	Age int
-				// 	City string
-				// }
-				struct {
-					Age  int
-					City string
-				}{44, "Atlanta"},
+				Profile{44, "Atlanta"},
 			},
 			[]string{"Chris", "Atlanta"},
 		},
