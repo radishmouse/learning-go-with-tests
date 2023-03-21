@@ -13,7 +13,10 @@ func walk(x interface{}, fn func(input string)) {
 		// get the ith field from `val`, which must be a struct (else err)
 		field := val.Field(i)
 		// we're making the assumption that the struct field is a string
-		fn(field.String())
+		// how do we check?
+		if field.Kind() == reflect.String {
+			fn(field.String())
+		}
 	}
 
 }
