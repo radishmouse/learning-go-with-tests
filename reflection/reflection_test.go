@@ -27,6 +27,15 @@ func TestWalk(t *testing.T) {
 			// the result should be a 1 element slice of strings
 			[]string{"Chris"},
 		},
+		{
+			// second test case
+			"struct with two string fields",
+			struct {
+				Name string
+				City string
+			}{"Chris", "London"},
+			[]string{"Chris", "London"},
+		},
 	}
 
 	for _, test := range cases {

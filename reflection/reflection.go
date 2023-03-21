@@ -7,10 +7,13 @@ func walk(x interface{}, fn func(input string)) {
 	// get a concrete value stored in the interface `x`
 	val := reflect.ValueOf(x)
 
-	// grab the 0th field of the struct
-	// and: it only works for structs
-	field := val.Field(0)
+	// now...I'm going to receive more than one field.
+	// how do I count the number of fields?
+	for i := 0; i < val.NumField(); i++ {
+		// get the ith field from `val`, which must be a struct (else err)
+		field := val.Field(i)
+		// we're making the assumption that the struct field is a string
+		fn(field.String())
+	}
 
-	// we're making the assumption that the struct field is a string
-	fn(field.String())
 }
